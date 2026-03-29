@@ -1,0 +1,11 @@
+﻿# Rider / IntelliJ
+.idea/
+
+# Build
+bin/
+obj/
+
+# Visual Studio / C#
+*.user
+*.suo
+*.vscode/
