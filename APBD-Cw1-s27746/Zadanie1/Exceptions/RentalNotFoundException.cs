@@ -2,9 +2,9 @@
 
 public class RentalNotFoundException : Exception
 {
-    public RentalNotFoundException(int equipmentid, int userid)
+    public RentalNotFoundException(int equipmentid, int userid) :  base($"\n Rental for equipment {equipmentid} by username: {userid} not found")
     {
-        Console.Write($"\t Rental for equipment {equipmentid} by username: {userid} not found");
     }
     
+
 }

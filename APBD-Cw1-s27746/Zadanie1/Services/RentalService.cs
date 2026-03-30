@@ -7,7 +7,7 @@ public class RentalService : IRentalService
 {
     
     private List<Rental> rentals = new List<Rental>();
-    private static int delayFeePerDay = 10;
+    private static int delayFeePerDay = 2;
 
     
     public void AddRental(User user, Equipment equipment, DateTime rentalStart, DateTime rentalEnd)
@@ -42,26 +42,39 @@ public class RentalService : IRentalService
 
     public void ReturnRental(User user, Equipment equipment)
     {
-        
-        var rental = rentals.FirstOrDefault(rental => rental.user == user && rental.equipment == equipment && !rental.isReturned);
+        try
         {
-            if (rental is null)
-            {
-                throw new RentalNotFoundException(equipment.equipmentid, user.userid);
-            }
-        }
-        
-        rental.isReturned = true;
-        rental.realRentalEnd = DateTime.Now;
-        equipment.isAvailable = true;
-        rentals.Remove(rental);
 
-        if (rental.realRentalEnd >= rental.rentalEnd)
+
+            var rental = rentals.FirstOrDefault(rental =>
+                rental.user == user && rental.equipment == equipment && !rental.isReturned);
+            {
+                if (rental is null)
+                {
+                    throw new RentalNotFoundException(equipment.equipmentid, user.userid);
+                }
+            }
+
+            rental.isReturned = true;
+            rental.realRentalEnd = DateTime.Now;
+            equipment.isAvailable = true;
+            rentals.Remove(rental);
+
+            if (rental.realRentalEnd >= rental.rentalEnd)
+            {
+                int delayDays = (rental.realRentalEnd.Value - rental.rentalEnd).Days;
+                rental.totalDelayFee = delayDays * delayFeePerDay;
+                Console.WriteLine($"\n Rental returned with delay. Delay Fee : {rental.totalDelayFee} EUR.");
+            }
+            else
+            {
+                Console.WriteLine($"\n Rental returned in time. No additional fees applied.");
+            }
+
+        }catch (RentalNotFoundException ex)
         {
-            int delayDays = (rental.realRentalEnd.Value - rental.rentalEnd).Days;
-            rental.totalDelayFee = delayDays * delayFeePerDay;
+            Console.WriteLine(ex.Message);
         }
-        
     }
 
     public List<Rental> GetUserRentals(User user)

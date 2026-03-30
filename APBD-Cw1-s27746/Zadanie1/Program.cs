@@ -18,14 +18,16 @@ RentalService rentalService = new RentalService();
 //poprawne wypozyczenie 
 rentalService.AddRental(student2, laptop1, new DateTime(2026,03,25),new DateTime(2026,03,31));
 
+Console.Write("\n ------------LISTA PO POPRAWNEJ PRÓBIE WYPOZYCZENIA-----------------");
 foreach (var rental in rentalService.GetAllRentals())
 {
     Console.Write("\n" +rental);
 }
 
 //niepoprawna operacja - wypożyczenie niedostępnego sprzętu
-
+Console.Write("\n ------------PRÓBA WYPOŻYCZENIA NIEDOSTĘPNEGO SPRZĘTU-----------------");
 rentalService.AddRental(student1,laptop1,DateTime.Now,new DateTime(2026,04,05));
+
 
 
 Console.Write("\n ------------LISTA PO NIEPOPRAWNEJ PRÓBIE WYPOZYCZENIA-----------------");
@@ -36,12 +38,16 @@ foreach (var rental in rentalService.GetAllRentals())
 
 
 //zwrot sprzętu w terminie
-
+Console.Write("\n ------------ZWROT SPRZĘTU W TERMINIE-----------------");
 rentalService.ReturnRental(student2,laptop1);
-
-Console.Write("\n ------------LISTA PO ZWROCIE SPRZĘTU W TERMINIE-----------------");
 
 foreach (var rental in rentalService.GetAllRentals())
 {
     Console.Write("\n" +rental);
 }
+//zwrot sprzętu po terminie
+
+Console.Write("\n ------------ZWROT SPZĘTU PO TERMINIE-----------------");
+
+rentalService.AddRental(student3,laptop1,new DateTime(2026,03,06),new DateTime(2026,03,15));
+rentalService.ReturnRental(student3,laptop1);
