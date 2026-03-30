@@ -12,21 +12,32 @@ public class RentalService : IRentalService
     
     public void AddRental(User user, Equipment equipment, DateTime rentalStart, DateTime rentalEnd)
     {
-        if (!equipment.isAvailable)
-        {
-            throw new EquipmentNotAvailableException(equipment.equipmentid);
-        }
 
-        int activeUserReservations = rentals.Count(rental => rental.user == user && !rental.isReturned);
-        
-        if (activeUserReservations >= user.MaxActiveRentals)
+        try
         {
-            throw new UserRentalLimitExceededException(user.username);
+            if (!equipment.isAvailable)
+            {
+                throw new EquipmentNotAvailableException(equipment.equipmentid);
+            }
+
+            int activeUserReservations = rentals.Count(rental => rental.user == user && !rental.isReturned);
+
+            if (activeUserReservations >= user.MaxActiveRentals)
+            {
+                throw new UserRentalLimitExceededException(user.userid);
+            }
+
+            var rental = new Rental(user, equipment, rentalStart, rentalEnd);
+            equipment.isAvailable = false;
+            rentals.Add(rental);
         }
-        
-        var rental = new Rental(user, equipment, rentalStart, rentalEnd);
-        equipment.isAvailable = false;
-        rentals.Add(rental);
+        catch (EquipmentNotAvailableException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }catch (UserRentalLimitExceededException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public void ReturnRental(User user, Equipment equipment)

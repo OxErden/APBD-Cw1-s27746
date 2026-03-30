@@ -2,8 +2,9 @@
 
 public class EquipmentNotAvailableException : Exception
 {
-    public EquipmentNotAvailableException(int equipmentId)
+    public EquipmentNotAvailableException(int equipmentId) : base($"\n Equipment ID: {equipmentId} is not available for rent")
     {
-        Console.WriteLine($"Equipment ID: {equipmentId} is not available");
+        
     }
+
 }

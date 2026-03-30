@@ -2,9 +2,9 @@
 
 public class UserRentalLimitExceededException : Exception
 {
-    public UserRentalLimitExceededException(string username)
+    public UserRentalLimitExceededException(int userid) : base($"UserID {userid} exceeded the maximum allowed rental limit")
     {
-        Console.WriteLine($"User {username} exceeded the maximum allowed rental limit");
+        
     }
     
 }

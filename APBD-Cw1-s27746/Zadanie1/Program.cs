@@ -1,60 +1,47 @@
-﻿using APBD_Cw1_s27746.Zadanie1.Exceptions;
+﻿
 using APBD_Cw1_s27746.Zadanie1.Model;
 using APBD_Cw1_s27746.Zadanie1.Services;
+//tworzenie sprzętu
+var laptop1 = new Laptop("nitro5", "Asus", 512, 17);
+var laptop2 = new Laptop("ZBook", "HP", 256, 15 );
+var projector1 = new Projector("prx5", "Sony", "4kUltraHd",5000);
+var camera1 = new Camera("Canon 5000", "Canon", 500, 1850);
+//tworzenie uzytkowników
+var student1 = new Student("John", "Murphy", 3332);
+var student2 = new Student("Clarke", "Griffin", 1123);
+var student3 = new Student("Bellamy", "Blake", 2215);
+var employee1 = new Employee("Marcus","Kane","Security");
+
 
 RentalService rentalService = new RentalService();
 
-
-var studen1 = new Student("oska", "e", 12);
-var studen2 = new Student("oskar", "ex", 1213);
-var laptop = new Laptop("asus", "sony", 1,15);
-var camera = new Camera("d", "de", 1,2);
-var projector = new Projector("e", "x", "4k", 5000);
-
-
-try
-{
-
-    rentalService.AddRental(studen1, laptop, new DateTime(2020, 01, 01), new DateTime(2020, 01, 31));
-    rentalService.AddRental(studen2, camera, new DateTime(2020, 01, 01), new DateTime(2027, 01, 31));
-    rentalService.AddRental(studen1, projector, new DateTime(2020, 01, 01), new DateTime(2020, 01, 31));
-}
-catch (EquipmentNotAvailableException e)
-{
-    Console.WriteLine(e.Message);
-}
-
-
+//poprawne wypozyczenie 
+rentalService.AddRental(student2, laptop1, new DateTime(2026,03,25),new DateTime(2026,03,31));
 
 foreach (var rental in rentalService.GetAllRentals())
 {
-    Console.WriteLine(rental);
+    Console.Write("\n" +rental);
 }
 
-rentalService.ReturnRental(studen1, laptop);
+//niepoprawna operacja - wypożyczenie niedostępnego sprzętu
 
-Console.Write("------------------------------------- \n");
+rentalService.AddRental(student1,laptop1,DateTime.Now,new DateTime(2026,04,05));
+
+
+Console.Write("\n ------------LISTA PO NIEPOPRAWNEJ PRÓBIE WYPOZYCZENIA-----------------");
+foreach (var rental in rentalService.GetAllRentals())
+{
+    Console.Write("\n" +rental);
+}
+
+
+//zwrot sprzętu w terminie
+
+rentalService.ReturnRental(student2,laptop1);
+
+Console.Write("\n ------------LISTA PO ZWROCIE SPRZĘTU W TERMINIE-----------------");
 
 foreach (var rental in rentalService.GetAllRentals())
 {
-    Console.WriteLine(rental);
-}
-
-
-Console.Write("------------------------------------- \n");
-
-
-var overdueRentals = rentalService.GetOverdueRentals();
-
-if (overdueRentals.Count == 0)
-{
-    Console.WriteLine("Brak przeterminowanych wypożyczeń.");
-}
-else
-{
-    Console.WriteLine("\n--- Przeterminowane wypożyczenia ---");
-    foreach (var rental in overdueRentals)
-    {
-        Console.WriteLine(rental);
-    }
+    Console.Write("\n" +rental);
 }

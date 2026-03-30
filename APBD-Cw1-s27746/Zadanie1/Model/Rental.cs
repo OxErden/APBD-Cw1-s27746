@@ -30,6 +30,6 @@ public class Rental
 
     public override string ToString()
     {
-        return $"Rental ID: {rentalId} | UserId: {user.userid} | EquipmentId : {equipment.equipmentid} |  Rental Start : {rentalStart} | Rental End : {rentalEnd}";
+        return $"Rental ID: {rentalId} | UserId: {user.userid} | {user.name} {user.surname} | EquipmentId : {equipment.equipmentid} |  Rental Start : {rentalStart} | Rental End : {rentalEnd}";
     }
 }
