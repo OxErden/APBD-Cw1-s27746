@@ -6,6 +6,14 @@ var laptop1 = new Laptop("nitro5", "Asus", 512, 17);
 var laptop2 = new Laptop("ZBook", "HP", 256, 15 );
 var projector1 = new Projector("prx5", "Sony", "4kUltraHd",5000);
 var camera1 = new Camera("Canon 5000", "Canon", 500, 1850);
+
+EquipmentService equipmentService = new EquipmentService();
+
+equipmentService.AddEquipment(laptop1);
+equipmentService.AddEquipment(laptop2);
+equipmentService.AddEquipment(projector1);
+equipmentService.AddEquipment(camera1);
+
 //tworzenie uzytkowników
 var student1 = new Student("John", "Murphy", 3332);
 var student2 = new Student("Clarke", "Griffin", 1123);
@@ -15,6 +23,7 @@ var employee1 = new Employee("Marcus","Kane","Security");
 
 RentalService rentalService = new RentalService();
 
+ReportService reportService = new ReportService(rentalService, equipmentService);
 //poprawne wypozyczenie 
 rentalService.AddRental(student2, laptop1, new DateTime(2026,03,25),new DateTime(2026,03,31));
 
@@ -24,10 +33,10 @@ foreach (var rental in rentalService.GetAllRentals())
     Console.Write("\n" +rental);
 }
 
+
 //niepoprawna operacja - wypożyczenie niedostępnego sprzętu
 Console.Write("\n ------------PRÓBA WYPOŻYCZENIA NIEDOSTĘPNEGO SPRZĘTU-----------------");
 rentalService.AddRental(student1,laptop1,DateTime.Now,new DateTime(2026,04,05));
-
 
 
 Console.Write("\n ------------LISTA PO NIEPOPRAWNEJ PRÓBIE WYPOZYCZENIA-----------------");
@@ -51,3 +60,10 @@ Console.Write("\n ------------ZWROT SPZĘTU PO TERMINIE-----------------");
 
 rentalService.AddRental(student3,laptop1,new DateTime(2026,03,06),new DateTime(2026,03,15));
 rentalService.ReturnRental(student3,laptop1);
+
+
+reportService.GenerateReport();
+
+rentalService.AddRental(student3, projector1, new DateTime(2026,03,06),new DateTime(2026,05,20));
+Console.Write("\n ------------DODANIE AKTYWNEGO WYPOŻYCZENIA----------------");
+reportService.GenerateReport();

@@ -60,7 +60,7 @@ public class RentalService : IRentalService
             equipment.isAvailable = true;
             rentals.Remove(rental);
 
-            if (rental.realRentalEnd >= rental.rentalEnd)
+            if (rental.realRentalEnd > rental.rentalEnd)
             {
                 int delayDays = (rental.realRentalEnd.Value - rental.rentalEnd).Days;
                 rental.totalDelayFee = delayDays * delayFeePerDay;
