@@ -4,13 +4,12 @@ public class Rental
 {
     
     private static int _id = 0;
-    private static int delayFeePerDay = 10;
     
     public int rentalId { get; }
     
     public DateTime rentalStart { get; } 
     public DateTime rentalEnd { get; set; } 
-    public DateTime realRentalEnd { get; set; }
+    public DateTime? realRentalEnd { get; set; }
     public User user { get; set; } 
     public Equipment equipment { get; set; } 
     public bool isReturned { get; set; } = false;
@@ -29,21 +28,8 @@ public class Rental
         
     }
 
-    public void Return()
+    public override string ToString()
     {
-        isReturned = true;
-        realRentalEnd = DateTime.Now;
-        equipment.isAvailable = true;
-
-        if (realRentalEnd > rentalEnd)
-        {
-            int delayDays = (realRentalEnd - rentalEnd).Days;
-            totalDelayFee = delayDays * delayFeePerDay;
-        }
-        else
-        {
-            totalDelayFee = 0;
-        }
+        return $"Rental ID: {rentalId} | UserId: {user.userid} | EquipmentId : {equipment.equipmentid} |  Rental Start : {rentalStart} | Rental End : {rentalEnd}";
     }
-
 }

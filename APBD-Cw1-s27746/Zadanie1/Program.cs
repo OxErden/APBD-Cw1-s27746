@@ -1,53 +1,60 @@
-﻿
-
-
+﻿using APBD_Cw1_s27746.Zadanie1.Exceptions;
 using APBD_Cw1_s27746.Zadanie1.Model;
+using APBD_Cw1_s27746.Zadanie1.Services;
 
-var laptop1 = new Laptop("DellXHP", "Dell", 256, 16);
-var laptop2 = new Laptop("ZBook ","HP", 128, 15);
-var laptop3 = new Laptop("Nitro 5", "Asus", 512, 17);
-var projektor1 = new Projector("SonyX3", "Sony", "4kULTRAHD", 5000);
-var projektor2 = new Projector("SonyX5", "Sony", "8kULTRAHD", 6000);
-var camera1 = new Camera("IXUS 500", "Canon", 500, 2100);
-
-var studen1 = new Student("Oskar", "Erdenberger", 27746);
-var studen2 = new Student("Patyk", "Fijalkoswi", 25789);
-var studen3 = new Student("Hela", "Chymel", 27312);
+RentalService rentalService = new RentalService();
 
 
-List<Equipment> equipments = new List<Equipment>();
-equipments.Add(projektor1);
-equipments.Add(projektor2);
-equipments.Add(laptop1);
-equipments.Add(laptop2);
-equipments.Add(laptop3);
-equipments.Add(camera1);
+var studen1 = new Student("oska", "e", 12);
+var studen2 = new Student("oskar", "ex", 1213);
+var laptop = new Laptop("asus", "sony", 1,15);
+var camera = new Camera("d", "de", 1,2);
+var projector = new Projector("e", "x", "4k", 5000);
 
-foreach (var equipment in equipments)
+
+try
 {
-    Console.WriteLine(equipment.getDetails());
+
+    rentalService.AddRental(studen1, laptop, new DateTime(2020, 01, 01), new DateTime(2020, 01, 31));
+    rentalService.AddRental(studen2, camera, new DateTime(2020, 01, 01), new DateTime(2027, 01, 31));
+    rentalService.AddRental(studen1, projector, new DateTime(2020, 01, 01), new DateTime(2020, 01, 31));
 }
-
-
-Console.WriteLine("----------------------------");
-
-
-var rental1 = new Rental(studen1, laptop1, DateTime.Now, DateTime.Now.AddDays(7));
-var rental2 = new Rental(studen2, camera1,DateTime.Now, DateTime.Now.AddDays(7));
-var rental3 = new Rental(studen3, camera1,DateTime.Now, DateTime.Now.AddDays(7));
-
-foreach (var equipment in equipments)
+catch (EquipmentNotAvailableException e)
 {
-    Console.WriteLine(equipment.getDetails());
+    Console.WriteLine(e.Message);
 }
 
 
 
-
-foreach (var equipment in equipments)
+foreach (var rental in rentalService.GetAllRentals())
 {
-    if (!equipment.isAvailable)
+    Console.WriteLine(rental);
+}
+
+rentalService.ReturnRental(studen1, laptop);
+
+Console.Write("------------------------------------- \n");
+
+foreach (var rental in rentalService.GetAllRentals())
+{
+    Console.WriteLine(rental);
+}
+
+
+Console.Write("------------------------------------- \n");
+
+
+var overdueRentals = rentalService.GetOverdueRentals();
+
+if (overdueRentals.Count == 0)
+{
+    Console.WriteLine("Brak przeterminowanych wypożyczeń.");
+}
+else
+{
+    Console.WriteLine("\n--- Przeterminowane wypożyczenia ---");
+    foreach (var rental in overdueRentals)
     {
-        Console.WriteLine(equipment.getDetails());
+        Console.WriteLine(rental);
     }
 }
