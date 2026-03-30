@@ -6,5 +6,5 @@ public class Student(string name, string surname, int studentnumber) : User(name
 public int Studentnumber { get; set; } = studentnumber;
 
 
-
+public override int MaxActiveRentals => 2;
 }

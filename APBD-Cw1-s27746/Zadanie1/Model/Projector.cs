@@ -8,7 +8,7 @@ public class Projector (string equipmentname, string equipmentmanufacturer, stri
     
     public override string getDetails()
     {
-        return $"PROJECTOR, EQUIPMENT ID: {equipmentid}, Name: {equipmentname}, Brand: {equipemtnmanufacturer}, Resolution : {resolution}, Lumens: {lumens}, availability: {isAvailable}" ;
+        return $"PROJECTOR, EQUIPMENT ID: {equipmentid}, Name: {equipmentname}, Brand: {equipmentmanufacturer }, Resolution : {resolution}, Lumens: {lumens}, availability: {isAvailable}" ;
     }
 
     

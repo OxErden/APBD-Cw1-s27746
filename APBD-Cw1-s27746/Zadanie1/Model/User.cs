@@ -9,4 +9,6 @@ public abstract class User(string name, string surname)
     public string username { get; set; }
     public int userid { get; } =  ++_id;
 
+    public abstract int MaxActiveRentals { get; }
+    
 }

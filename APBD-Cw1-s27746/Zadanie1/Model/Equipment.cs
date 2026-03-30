@@ -6,7 +6,7 @@ public abstract class Equipment(string equipmentname, string equipemtnmanufactur
     
     public int equipmentid { get; } = ++_id;
     public string equipmentname { get; } = equipmentname;
-    public string equipemtnmanufacturer { get; } = equipemtnmanufacturer;
+    public string equipmentmanufacturer  { get; } = equipemtnmanufacturer;
     
     public bool isAvailable { get; set; } = true;
 

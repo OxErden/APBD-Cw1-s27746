@@ -4,5 +4,7 @@ public class Employee(string name, string surname, string department) : User (na
 
 {
     public string Department { get; set; } =  department;
-    
+
+
+    public override int MaxActiveRentals => 5;
 }

@@ -9,6 +9,6 @@ public class Camera(string equipmentname, string equipmentmanufacturer, int memo
     
     public override string getDetails()
     {
-        return $"CAMERA, EQUIPMENT ID: {equipmentid}, Name: {equipmentname}, Brand: {equipemtnmanufacturer}, Memory: {memory}, MatrixPx: {matrixPx}, availability: {isAvailable}" ;
+        return $"CAMERA, EQUIPMENT ID: {equipmentid}, Name: {equipmentname}, Brand: {equipmentmanufacturer }, Memory: {memory}, MatrixPx: {matrixPx}, availability: {isAvailable}" ;
     }
 }
