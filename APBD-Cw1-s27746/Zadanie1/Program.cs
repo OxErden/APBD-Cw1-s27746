@@ -1,38 +1,31 @@
 ﻿
 
-using System.Collections;
+
 using APBD_Cw1_s27746.Zadanie1.Model;
 
-var student1 = new Student("oskar", "x", 27746);
-var student2 = new Student("lukasz", "z", 23565);
+var laptop1 = new Laptop("DellXHP", "Dell", 256, 16);
+var laptop2 = new Laptop("ZBook ","HP", 128, 15);
+var laptop3 = new Laptop("Nitro 5", "Asus", 512, 17);
+var projektor1 = new Projector("SonyX3", "Sony", "4kULTRAHD", 5000);
+var projektor2 = new Projector("SonyX5", "Sony", "8kULTRAHD", 6000);
+var camera1 = new Camera("IXUS 500", "Canon", 500, 2100);
 
-var employee1 = new Employee("kacper", "W", "HR");
-var employee2 = new Employee("maksymilian", "C", "UX");
-var employee3 = new Employee("sylwia", "G", "Marketing");
 
+List<Equipment> equipments = new List<Equipment>();
+equipments.Add(projektor1);
+equipments.Add(projektor2);
+equipments.Add(laptop1);
+equipments.Add(laptop2);
+equipments.Add(laptop3);
+equipments.Add(camera1);
 
-List<Student> students = new List<Student>();
-
-students.Add(student1);
-students.Add(student2);
-
-List<Employee> employees = new List<Employee>();
-employees.Add(employee1);
-employees.Add(employee2);
-employees.Add(employee3);
-
-int counter = 1;
-foreach (var employee in employees)
+foreach (var equipment in equipments)
 {
+    Console.WriteLine(equipment.getDetails());
+}
+
+
+Console.WriteLine("----------------------------");
+
+
     
-    Console.WriteLine($"{"Employee nr: " + counter++} {employee.name} {employee.surname} {employee.Department}");
-}
-
-student1.username = "oxerden";
-
-foreach (var student in students)
-{
-    Console.WriteLine($"{student.name} {student.surname} {student.username} {"STUDENT NUMBER: " + student.Studentnumber}");
-}
-
-
